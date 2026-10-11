@@ -52,12 +52,12 @@ export const Header: React.FC<HeaderProps> = ({
   const isUnderstandUnlocked = isConnectUnlocked && connectionsVerifiedCount >= 5;
   const isUnlockUnlocked = isUnderstandUnlocked && deductionCompleted;
 
-  const stages: { stage: Stage; label: string; screen: Screen; icon: React.ReactNode; unlocked: boolean }[] = [
-    { stage: 'discover', label: '1. Discover', screen: 'archive', icon: <Compass size={14} />, unlocked: true },
-    { stage: 'decode', label: '2. Decode', screen: 'puzzles', icon: <KeyRound size={14} />, unlocked: isDecodeUnlocked },
-    { stage: 'connect', label: '3. Connect', screen: 'connect', icon: <GitFork size={14} />, unlocked: isConnectUnlocked },
-    { stage: 'understand', label: '4. Understand', screen: 'understand', icon: <Lightbulb size={14} />, unlocked: isUnderstandUnlocked },
-    { stage: 'unlock', label: '5. Unlock', screen: 'unlock', icon: <Trophy size={14} />, unlocked: isUnlockUnlocked }
+  const stages: { stage: Stage; shortLabel: string; fullLabel: string; screen: Screen; icon: React.ReactNode; unlocked: boolean }[] = [
+    { stage: 'discover', shortLabel: '1. Discover', fullLabel: 'Stage 1: Discover', screen: 'archive', icon: <Compass size={14} />, unlocked: true },
+    { stage: 'decode', shortLabel: '2. Decode', fullLabel: 'Stage 2: Decode', screen: 'puzzles', icon: <KeyRound size={14} />, unlocked: isDecodeUnlocked },
+    { stage: 'connect', shortLabel: '3. Connect', fullLabel: 'Stage 3: Connect', screen: 'connect', icon: <GitFork size={14} />, unlocked: isConnectUnlocked },
+    { stage: 'understand', shortLabel: '4. Understand', fullLabel: 'Stage 4: Understand', screen: 'understand', icon: <Lightbulb size={14} />, unlocked: isUnderstandUnlocked },
+    { stage: 'unlock', shortLabel: '5. Unlock', fullLabel: 'Stage 5: Unlock', screen: 'unlock', icon: <Trophy size={14} />, unlocked: isUnlockUnlocked }
   ];
 
   return (
@@ -65,46 +65,70 @@ export const Header: React.FC<HeaderProps> = ({
       width: '100%',
       background: 'var(--color-bg-primary)',
       borderBottom: '1px solid rgba(214, 179, 106, 0.3)',
-      padding: '8px 16px',
       position: 'sticky',
       top: 0,
       zIndex: 50,
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.6)'
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.7)'
     }}>
       <div style={{
         maxWidth: '1400px',
         margin: '0 auto',
+        padding: '8px 12px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '12px'
+        gap: '8px'
       }}>
         
-        {/* Logo & Chapter Identity */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Brand Identity / Home */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button
             onClick={() => {
               sound.playClick(soundEnabled);
               onNavigate('main_menu');
             }}
             className="kalam-icon-btn"
+            style={{ width: '44px', height: '44px' }}
             title="Return to Main Menu"
+            aria-label="Main Menu"
           >
             <Home size={18} />
           </button>
           <div>
-            <span style={{ fontSize: '9px', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-gold)', fontWeight: 700, display: 'block' }}>
-              Project Kalam
+            <span style={{
+              fontSize: '9px',
+              fontFamily: 'var(--font-mono)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              color: 'var(--color-gold)',
+              fontWeight: 700,
+              display: 'block'
+            }}>
+              PROJECT KALAM
             </span>
-            <span className="font-heading" style={{ fontSize: '15px', fontWeight: 800, color: 'var(--color-text-light)' }}>
+            <span className="font-heading" style={{
+              fontSize: '14px',
+              fontWeight: 800,
+              color: 'var(--color-text-light)',
+              display: 'block',
+              lineHeight: '1.2'
+            }}>
               Chapter 3: Space Dreamer
             </span>
           </div>
         </div>
 
-        {/* 5 Stages Navigation Buttons */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '6px', overflowX: 'auto', padding: '4px 0' }}>
+        {/* 5 Stages Navigation (Touch-friendly, horizontal scroll on mobile) */}
+        <nav style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          overflowX: 'auto',
+          maxWidth: '100%',
+          padding: '2px 0',
+          WebkitOverflowScrolling: 'touch'
+        }}>
           {stages.map((st) => {
             const isActive = currentScreen === st.screen;
             const isClickable = st.unlocked;
@@ -117,43 +141,48 @@ export const Header: React.FC<HeaderProps> = ({
                   sound.playClick(soundEnabled);
                   onNavigate(st.screen);
                 }}
-                className={isActive ? 'kalam-btn-primary' : isClickable ? 'kalam-btn-secondary' : 'kalam-btn-secondary'}
+                className={isActive ? 'kalam-btn-primary' : 'kalam-btn-secondary'}
                 style={{
-                  minHeight: '34px',
-                  padding: '4px 12px',
+                  minHeight: '44px',
+                  padding: '6px 12px',
                   fontSize: '11px',
-                  opacity: isClickable ? 1 : 0.4,
-                  cursor: isClickable ? 'pointer' : 'not-allowed'
+                  opacity: isClickable ? 1 : 0.45,
+                  cursor: isClickable ? 'pointer' : 'not-allowed',
+                  flexShrink: 0,
+                  whiteSpace: 'nowrap'
                 }}
-                title={st.unlocked ? `Go to ${st.label}` : 'Complete prior stage to unlock'}
+                title={st.unlocked ? `Go to ${st.fullLabel}` : 'Complete previous milestone to unlock'}
+                aria-label={st.fullLabel}
               >
                 {st.icon}
-                <span>{st.label}</span>
+                <span>{st.shortLabel}</span>
               </button>
             );
           })}
         </nav>
 
-        {/* Header Right Tools */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        {/* Investigation Tools (44x44 touch targets) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <button
             onClick={() => { sound.playClick(soundEnabled); onOpenAudio(); }}
             className="kalam-btn-secondary"
-            style={{ minHeight: '34px', padding: '4px 10px', fontSize: '11px' }}
+            style={{ minHeight: '44px', padding: '6px 10px', fontSize: '11px' }}
             title="Audio Cassette Tape Player"
+            aria-label="Audio Tape Player"
           >
-            <CassetteTape size={14} />
-            <span>Audio Deck</span>
+            <CassetteTape size={16} />
+            <span className="hide-on-mobile">Audio</span>
           </button>
 
           <button
             onClick={() => { sound.playClick(soundEnabled); onOpenJournal(); }}
             className="kalam-btn-secondary"
-            style={{ minHeight: '34px', padding: '4px 10px', fontSize: '11px' }}
+            style={{ minHeight: '44px', padding: '6px 10px', fontSize: '11px', gap: '6px' }}
             title="Evidence Journal"
+            aria-label="Evidence Journal"
           >
-            <BookOpen size={14} />
-            <span>Journal</span>
+            <BookOpen size={16} />
+            <span className="hide-on-mobile">Journal</span>
             <span style={{
               background: 'var(--color-bronze)',
               color: 'var(--color-gold)',
@@ -170,45 +199,62 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onToggleSound}
             className="kalam-icon-btn"
-            style={{ width: '34px', height: '34px' }}
+            style={{ width: '44px', height: '44px' }}
             title={soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
+            aria-label={soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
           >
-            {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+            {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
           </button>
 
           <button
             onClick={() => { sound.playClick(soundEnabled); onOpenSettings(); }}
             className="kalam-icon-btn"
-            style={{ width: '34px', height: '34px' }}
+            style={{ width: '44px', height: '44px' }}
             title="Settings & Accessibility"
+            aria-label="Settings"
           >
-            <Settings size={16} />
+            <Settings size={18} />
           </button>
         </div>
       </div>
 
-      {/* Objective Banner */}
+      {/* Sub-Header: Mission Objective & Progress Ribbon */}
       <div style={{
         maxWidth: '1400px',
-        margin: '4px auto 0 auto',
-        paddingTop: '4px',
-        borderTop: '1px solid rgba(214, 179, 106, 0.1)',
+        margin: '0 auto',
+        padding: '6px 12px',
+        borderTop: '1px solid rgba(214, 179, 106, 0.15)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '6px',
         fontSize: '11px',
         color: 'var(--color-text-muted)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ color: 'var(--color-gold)', fontWeight: 700, textTransform: 'uppercase', fontSize: '10px', fontFamily: 'var(--font-mono)' }}>
-            CURRENT OBJECTIVE:
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flex: 1, minWidth: '220px' }}>
+          <span style={{
+            color: 'var(--color-gold)',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            fontSize: '10px',
+            fontFamily: 'var(--font-mono)'
+          }}>
+            OBJECTIVE:
           </span>
-          <span style={{ color: 'var(--color-text-light)', fontWeight: 500 }}>
+          <span style={{ color: 'var(--color-text-light)', fontWeight: 500, lineHeight: '1.3' }}>
             {currentObjective}
           </span>
         </div>
-        <div style={{ display: 'flex', gap: '16px', fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
-          <span>Evidence: <strong style={{ color: 'var(--color-gold)' }}>{evidenceCollectedCount}/{totalMandatoryEvidence}</strong></span>
+
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '10px',
+          flexShrink: 0
+        }}>
+          <span>Records: <strong style={{ color: 'var(--color-gold)' }}>{evidenceCollectedCount}/{totalMandatoryEvidence}</strong></span>
           <span>Puzzles: <strong style={{ color: 'var(--color-gold)' }}>{puzzlesSolvedCount}/4</strong></span>
           <span>Links: <strong style={{ color: 'var(--color-gold)' }}>{connectionsVerifiedCount}/5</strong></span>
         </div>

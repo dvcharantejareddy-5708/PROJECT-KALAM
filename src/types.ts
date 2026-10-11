@@ -37,6 +37,7 @@ export interface EvidenceItem {
 export interface TimelineEvent {
   id: string;
   year: string;
+  eraTag?: string;
   title: string;
   description: string;
   correctIndex: number;

@@ -3,15 +3,8 @@ import { FACT_INTERPRETATION_ITEMS, REASONING_QUESTIONS } from '../data/understa
 import { ENDINGS_DATA } from '../data/endingsData';
 import { EndingType } from '../types';
 import { 
-  Lightbulb, 
-  CheckCircle2, 
-  XCircle, 
   ArrowRight, 
-  BookOpen, 
-  Award,
-  Sparkles,
-  HelpCircle,
-  Compass
+  BookOpen
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 
@@ -172,12 +165,12 @@ export const UnderstandWorkspace: React.FC<UnderstandWorkspaceProps> = ({
                   )}
                 </div>
 
-                <div style={{ display: 'flex', gap: '6px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   <button
                     disabled={fiSubmitted}
                     onClick={() => handleFiSelect(item.id, 'fact')}
                     className={userAnswer === 'fact' ? 'kalam-btn-primary' : 'kalam-btn-secondary'}
-                    style={{ minHeight: '34px', padding: '4px 14px', fontSize: '11px' }}
+                    style={{ minHeight: '44px', padding: '8px 16px', fontSize: '12px' }}
                   >
                     Documented Fact
                   </button>
@@ -185,7 +178,7 @@ export const UnderstandWorkspace: React.FC<UnderstandWorkspaceProps> = ({
                     disabled={fiSubmitted}
                     onClick={() => handleFiSelect(item.id, 'interpretation')}
                     className={userAnswer === 'interpretation' ? 'kalam-btn-primary' : 'kalam-btn-secondary'}
-                    style={{ minHeight: '34px', padding: '4px 14px', fontSize: '11px' }}
+                    style={{ minHeight: '44px', padding: '8px 16px', fontSize: '12px' }}
                   >
                     Interpretation
                   </button>

@@ -227,17 +227,17 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
                 disabled={links.length === 0}
                 onClick={handleUndo}
                 className="kalam-btn-secondary"
-                style={{ minHeight: '34px', padding: '6px 14px', fontSize: '11px' }}
+                style={{ minHeight: '44px', padding: '8px 14px', fontSize: '12px' }}
               >
-                <Undo2 size={13} /> Undo Link
+                <Undo2 size={15} /> Undo Link
               </button>
               <button
                 disabled={links.length === 0}
                 onClick={handleReset}
                 className="kalam-btn-secondary"
-                style={{ minHeight: '34px', padding: '6px 14px', fontSize: '11px' }}
+                style={{ minHeight: '44px', padding: '8px 14px', fontSize: '12px' }}
               >
-                <RotateCcw size={13} /> Reset Board
+                <RotateCcw size={15} /> Reset Board
               </button>
             </div>
           )}
@@ -247,7 +247,7 @@ export const ConnectionsBoard: React.FC<ConnectionsBoardProps> = ({
       {/* 8 Connection Nodes Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
         gap: '16px'
       }}>
         {CONNECTION_NODES.map((node) => {

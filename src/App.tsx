@@ -13,9 +13,9 @@ import {
   loadSavedGame, 
   saveGame, 
   clearSavedGame, 
-  INITIAL_GAME_STATE 
+  INITIAL_GAME_STATE,
+  hasMeaningfulProgress 
 } from './utils/storage';
-import { sound } from './utils/sound';
 
 import { Header } from './components/Header';
 import { MainMenu } from './components/MainMenu';
@@ -45,10 +45,8 @@ export const App: React.FC = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
 
-  // Check whether saved game exists on disk
-  const [hasSavedGame, setHasSavedGame] = useState<boolean>(() => {
-    return loadSavedGame() !== null;
-  });
+  // Check whether a valid saved game with actual progress exists
+  const hasSavedGame = hasMeaningfulProgress(gameState);
 
   // Calculate dynamic counts
   const mandatoryItems = EVIDENCE_ITEMS.filter((i) => i.isMandatory);
@@ -116,25 +114,18 @@ export const App: React.FC = () => {
     }`;
   }, [gameState.settings.textSize, gameState.settings.reducedMotion]);
 
-  // Persist game state whenever significant fields change
+  // Persist game state ONLY when meaningful progress exists
   useEffect(() => {
+    if (!hasMeaningfulProgress(gameState)) {
+      return;
+    }
     saveGame({
       ...gameState,
       currentObjective: dynamicObjective.title,
       objectiveInstruction: dynamicObjective.instruction
     });
-    setHasSavedGame(true);
   }, [
-    gameState.currentScreen,
-    gameState.currentStage,
-    gameState.collectedEvidenceIds,
-    gameState.inspectedObjectIds,
-    gameState.puzzleStates,
-    gameState.verifiedConnections,
-    gameState.understandState,
-    gameState.chapterCompleted,
-    gameState.assignedEnding,
-    gameState.settings,
+    gameState,
     dynamicObjective.title,
     dynamicObjective.instruction
   ]);
@@ -163,7 +154,6 @@ export const App: React.FC = () => {
       currentScreen: 'intro',
       currentStage: 'discover'
     });
-    setHasSavedGame(true);
   };
 
   // Continue Saved Game
@@ -328,7 +318,8 @@ export const App: React.FC = () => {
 
   // Reset Progress within Settings
   const handleResetInvestigation = () => {
-    handleNewGame();
+    clearSavedGame();
+    setGameState(INITIAL_GAME_STATE);
   };
 
   // Replay Chapter from Complete Screen

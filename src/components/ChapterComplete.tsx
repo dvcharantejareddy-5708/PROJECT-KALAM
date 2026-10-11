@@ -8,10 +8,8 @@ import {
   Search, 
   RotateCcw, 
   Home, 
-  CheckCircle2, 
   AlertTriangle,
-  Award,
-  Sparkles
+  Award
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 

@@ -10,7 +10,6 @@ import {
   Calendar, 
   GitFork, 
   Award, 
-  FileText,
   ExternalLink
 } from 'lucide-react';
 import { sound } from '../utils/sound';
@@ -109,10 +108,11 @@ export const EvidenceJournal: React.FC<EvidenceJournalProps> = ({
           <button
             onClick={() => { sound.playClick(soundEnabled); onClose(); }}
             className="kalam-icon-btn"
-            style={{ width: '32px', height: '32px' }}
+            style={{ width: '44px', height: '44px' }}
             title="Close Journal"
+            aria-label="Close Journal"
           >
-            <X size={18} />
+            <X size={20} />
           </button>
         </div>
 

@@ -11,7 +11,6 @@ import {
   Bookmark,
   Eye,
   Info,
-  Sparkles,
   ShieldCheck
 } from 'lucide-react';
 import { sound } from '../utils/sound';
@@ -231,8 +230,8 @@ export const ArchiveDeskScene: React.FC<ArchiveDeskSceneProps> = ({
       {viewMode === 'dossier_showcase' && (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))',
-          gap: '20px'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+          gap: '16px'
         }}>
           {filteredEvidence.map((item, index) => {
             const isCollected = collectedIds.includes(item.id);

@@ -177,7 +177,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             style={{ height: '48px', fontSize: '14px' }}
           >
             <Play size={18} />
-            <span>New Investigation</span>
+            <span>{hasSavedGame ? 'New Investigation' : 'Start Investigation'}</span>
           </button>
 
           <button

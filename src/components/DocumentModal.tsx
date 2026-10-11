@@ -96,21 +96,22 @@ export const DocumentModal: React.FC<DocumentModalProps> = ({
             <button
               onClick={() => { sound.playClick(soundEnabled); onClose(); }}
               className="kalam-icon-btn"
-              style={{ width: '32px', height: '32px' }}
+              style={{ width: '44px', height: '44px' }}
               title="Close (Esc)"
+              aria-label="Close document inspection"
             >
-              <X size={18} />
+              <X size={20} />
             </button>
           </div>
         </div>
 
         {/* Scrollable Content Body */}
         <div style={{
-          padding: '24px',
+          padding: '16px',
           overflowY: 'auto',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          gap: '20px'
         }}>
           
           {/* Left Column: Visual Asset & Actions */}
@@ -270,18 +271,20 @@ export const DocumentModal: React.FC<DocumentModalProps> = ({
               <button
                 onClick={() => { sound.playClick(soundEnabled); onPrev(); }}
                 className="kalam-btn-secondary"
-                style={{ fontSize: '11px', minHeight: '32px', padding: '4px 12px' }}
+                style={{ fontSize: '12px', minHeight: '44px', padding: '8px 14px' }}
+                aria-label="Previous record"
               >
-                <ChevronLeft size={13} /> Previous
+                <ChevronLeft size={15} /> Previous
               </button>
             )}
             {onNext && (
               <button
                 onClick={() => { sound.playClick(soundEnabled); onNext(); }}
                 className="kalam-btn-secondary"
-                style={{ fontSize: '11px', minHeight: '32px', padding: '4px 12px' }}
+                style={{ fontSize: '12px', minHeight: '44px', padding: '8px 14px' }}
+                aria-label="Next record"
               >
-                Next <ChevronRight size={13} />
+                Next <ChevronRight size={15} />
               </button>
             )}
           </div>
