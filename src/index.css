@@ -1,0 +1,544 @@
+/* PROJECT KALAM: THE HIDDEN ARCHIVE - CHAPTER 3: SPACE DREAMER
+   AUTHENTIC 2.5D HISTORICAL INVESTIGATION GAME STYLESHEET (VANILLA CSS) */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Master Color Palette (Prompt Specification) */
+  --color-bg-primary: #0E1A26;
+  --color-bg-secondary: #142536;
+  --color-surface-charcoal: #1E1E1E;
+  --color-surface-elevated: #16283B;
+  --color-bronze: #5A3A1E;
+  --color-gold: #D6B36A;
+  --color-gold-hover: #E8CA82;
+  --color-gold-dim: rgba(214, 179, 106, 0.2);
+  --color-gold-glow: rgba(214, 179, 106, 0.45);
+  --color-aged-paper: #EADCC5;
+  --color-aged-paper-dark: #D4C3A3;
+  --color-paper-ink: #221E1B;
+  --color-text-muted: #A7B0B8;
+  --color-text-light: #F6F2E7;
+  --color-success: #388E3C;
+  --color-success-bg: rgba(56, 142, 60, 0.18);
+  --color-error: #D32F2F;
+  --color-error-bg: rgba(211, 47, 47, 0.18);
+
+  /* Typography */
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Shadows & Depth */
+  --shadow-panel: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(214, 179, 106, 0.25);
+  --shadow-paper: 0 12px 32px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-gold: 0 0 20px rgba(214, 179, 106, 0.35);
+
+  /* Border Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* Accessibility: Text Size Variations */
+body.text-standard { font-size: 16px; }
+body.text-large { font-size: 18px; }
+body.text-xlarge { font-size: 20px; }
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+body.reduced-motion *, body.reduced-motion *::before, body.reduced-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Base Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-light);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bronze);
+  border-radius: 4px;
+  border: 1px solid rgba(214, 179, 106, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* Focus Rings for Keyboard Navigation */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, h5, .font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  color: var(--color-text-light);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Button Component Styles */
+.kalam-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 24px;
+  background: linear-gradient(180deg, #6C4824 0%, #462B15 100%);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(214, 179, 106, 0.4);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.kalam-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #7F552B 0%, #5A3A1E 100%);
+  border-color: var(--color-gold-hover);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), var(--shadow-gold);
+  transform: translateY(-1px);
+}
+
+.kalam-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.kalam-btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.kalam-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 9px 20px;
+  background: rgba(20, 37, 54, 0.75);
+  border: 1px solid rgba(214, 179, 106, 0.35);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.kalam-btn-secondary:hover:not(:disabled) {
+  background: rgba(30, 52, 74, 0.95);
+  border-color: var(--color-gold);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.kalam-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: rgba(20, 37, 54, 0.7);
+  border: 1px solid rgba(214, 179, 106, 0.35);
+  color: var(--color-gold);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.kalam-icon-btn:hover {
+  background: rgba(30, 55, 80, 0.95);
+  border-color: var(--color-gold);
+  color: #fff;
+}
+
+/* Badges */
+.kalam-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(214, 179, 106, 0.15);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  color: var(--color-gold);
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kalam-badge-success {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-sm);
+  color: #81C784;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Dark Panel Containers */
+.kalam-panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(214, 179, 106, 0.25);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-panel);
+}
+
+.kalam-panel-charcoal {
+  background: var(--color-surface-charcoal);
+  border: 1px solid rgba(214, 179, 106, 0.2);
+  border-radius: var(--radius-md);
+}
+
+/* Aged Parchment Document Paper Styling */
+.kalam-paper {
+  background: var(--color-aged-paper);
+  color: var(--color-paper-ink);
+  border: 1px solid #C4B08F;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-paper);
+  position: relative;
+}
+
+.kalam-paper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 40% 30%, rgba(255, 255, 255, 0.18), rgba(139, 90, 43, 0.08));
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* =========================================================================
+   2.5D ARCHIVE ROOM & WORKBENCH SCENE STYLING
+   ========================================================================= */
+
+.archive-scene-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 640px;
+  margin: 0 auto;
+  border: 2px solid rgba(214, 179, 106, 0.4);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 0.6);
+  background: #080E16;
+}
+
+/* Back Wall Layer */
+.archive-back-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(180deg, #070D14 0%, #0E1A26 70%, #142536 100%);
+  border-bottom: 2px solid #2A1D13;
+  overflow: hidden;
+}
+
+/* Window with Night Stars & Launch Pad */
+.archive-window {
+  position: absolute;
+  top: 15px;
+  left: 25px;
+  width: 180px;
+  height: 200px;
+  border: 6px solid #3A2312;
+  border-radius: 90px 90px 4px 4px;
+  background: radial-gradient(circle at 50% 80%, #162B45 0%, #050B12 100%);
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(214, 179, 106, 0.15);
+}
+
+.archive-window::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-image: url('/assets/launch_pad_photo.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.65;
+  filter: contrast(130%) grayscale(40%);
+}
+
+/* Framed Kalam Portrait on Wall */
+.archive-portrait-frame {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  width: 140px;
+  height: 180px;
+  border: 6px solid #5A3A1E;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(214, 179, 106, 0.2);
+  background: #0E1A26;
+  overflow: hidden;
+}
+
+.archive-portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(110%);
+}
+
+.archive-portrait-quote {
+  position: absolute;
+  top: 210px;
+  right: 25px;
+  width: 180px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  color: var(--color-gold);
+  text-align: center;
+  font-style: italic;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Pinned Blueprints on Wall */
+.archive-pinned-blueprint {
+  position: absolute;
+  top: 25px;
+  left: 230px;
+  width: 220px;
+  height: 190px;
+  background: #0E2238;
+  border: 1px dashed rgba(214, 179, 106, 0.4);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+  padding: 4px;
+  transform: rotate(-1deg);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.archive-pinned-blueprint:hover {
+  transform: rotate(-1deg) scale(1.02);
+  border-color: var(--color-gold);
+}
+
+/* Archival Shelves on Right Wall */
+.archive-bookshelf {
+  position: absolute;
+  top: 20px;
+  right: 200px;
+  width: 240px;
+  height: 200px;
+  border: 4px solid #3A2312;
+  background: #080D14;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 6px;
+}
+
+.archive-shelf-row {
+  display: flex;
+  gap: 4px;
+  height: 55px;
+  border-bottom: 3px solid #4A2E18;
+  align-items: flex-end;
+}
+
+.archive-binder {
+  height: 100%;
+  border-radius: 2px;
+  border: 1px solid rgba(214, 179, 106, 0.2);
+  writing-mode: vertical-rl;
+  font-size: 8px;
+  font-family: var(--font-mono);
+  color: #D6B36A;
+  padding: 2px;
+  text-align: center;
+}
+
+/* Large 2.5D Mahogany Desk Surface (Perspective Layer) */
+.archive-desk-surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 52%;
+  background: linear-gradient(180deg, #2D1A0D 0%, #3D2312 20%, #29170C 70%, #1E1008 100%);
+  border-top: 4px solid #5A3A1E;
+  box-shadow: inset 0 8px 30px rgba(0, 0, 0, 0.8), 0 -10px 40px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  perspective: 800px;
+}
+
+/* Desk Lamp Warm Glow Cone */
+.archive-lamp-glow {
+  position: absolute;
+  top: -40px;
+  left: 120px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle at 35% 25%, rgba(255, 235, 178, 0.32) 0%, rgba(214, 179, 106, 0.12) 35%, transparent 70%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Interactive Desk Hotspot Object */
+.desk-object {
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  z-index: 10;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.7));
+}
+
+.desk-object:hover {
+  transform: scale(1.08) translateY(-4px) !important;
+  filter: drop-shadow(0 12px 20px rgba(214, 179, 106, 0.5)) brightness(1.1);
+  z-index: 25;
+}
+
+.desk-object-thumb {
+  border: 2px solid rgba(214, 179, 106, 0.4);
+  border-radius: var(--radius-sm);
+  background: #0E1A26;
+  object-fit: contain;
+  transition: border-color 0.2s ease;
+}
+
+.desk-object:hover .desk-object-thumb {
+  border-color: var(--color-gold);
+}
+
+/* Hotspot Glowing Pulse Pin */
+.hotspot-pin {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: #0E1A26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 0 10px var(--color-gold);
+  animation: pulsePin 2s infinite ease-in-out;
+}
+
+@keyframes pulsePin {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px var(--color-gold); }
+  50% { transform: scale(1.2); box-shadow: 0 0 16px var(--color-gold-hover); }
+}
+
+.hotspot-pin.collected {
+  background: var(--color-success);
+  color: white;
+  box-shadow: 0 0 10px var(--color-success);
+  animation: none;
+}
+
+/* Hover Tooltip on Desk Objects */
+.desk-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(14, 26, 38, 0.95);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 30;
+}
+
+.desk-object:hover .desk-tooltip {
+  opacity: 1;
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+/* Grid & Flex Utilities */
+.kalam-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
